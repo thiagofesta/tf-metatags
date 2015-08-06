@@ -1,0 +1,26 @@
+{
+  "name": "tf-metatags",
+  "version": "0.0.1",
+  "homepage": "https://github.com/thiagofesta/tf-metatags",
+  "description": "Angular module for providing MetaTags support based on routes",
+  "main": "tf-metatags.js",
+  "keywords": [
+    "metatags",
+    "seo",
+    "angular",
+    "ui-router",
+    "router",
+    "meta"
+  ],
+  "authors": [
+    "Thiago Felipe Festa <thiagofesta@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
