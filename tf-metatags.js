@@ -4,7 +4,7 @@
  *
  * Provides metatags to the routes
  */
-angular.module('tf-metatags', ['ui-router'])
+angular.module('tf-metatags', ['ui.router'])
     .service('MetaTags', ['$rootScope', '$state', function ($rootScope, $state) {
         'use strict';
 
