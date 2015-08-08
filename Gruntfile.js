@@ -130,8 +130,8 @@ module.exports = function(grunt) {
   grunt.registerTask('test', [
     'connect:test',
     'jshint',
-    'karma',
-    'protractor:e2e'
+    'karma'/*,
+    'protractor:e2e'*/
   ]);
 
   grunt.registerTask('test:jshint', [
