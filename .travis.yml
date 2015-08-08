@@ -9,3 +9,6 @@ before_script:
 
 script:
   - grunt test
+
+after_script:
+  - NODE_ENV=cat ./test/coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
