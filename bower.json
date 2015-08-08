@@ -30,6 +30,9 @@
     "test",
     "tests",
     "sample",
-    "src"
+    "src",
+    "Gruntfile.js",
+    "package.json",
+    "README.md"
   ]
 }
