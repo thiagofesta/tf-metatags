@@ -1,4 +1,4 @@
-# tf-metatags
+# MetaTags
 
 Angular module for providing MetaTags support based on routes.
 
@@ -6,11 +6,11 @@ Angular module for providing MetaTags support based on routes.
 
 First you need to install the dependencies
 
-  npm install
+    npm install
 
 Now you are able to have the server up and runing. Go and start the server
 
-  grunt server
+    grunt server
   
 
 ### Running tests
@@ -19,7 +19,7 @@ We have JSHint, Unit tests and E2E tests.
  
 All of them can be run once using the following command
   
-  grunt test
+    grunt test
   
 You can see the coverage on the command line output or more details opening the `test/coverage/index.html` file on your browser.
 
@@ -28,27 +28,27 @@ You can see the coverage on the command line output or more details opening the 
 
 For running JSHint
 
-  grunt test:jshint
+    grunt test:jshint
   
 
 ##### Running Unit Tests
 
 For running unit tests
 
-  grunt test:unit
+   grunt test:unit
   
   
 ##### Running E2E Tests
 
 For running E2E
 
-  grunt test:e2e
+    grunt test:e2e
   
 
 ### Building
 
 For create a build run
 
-  grunt build
+    grunt build
   
 This task will also make sure all tests are passing before making the build.
