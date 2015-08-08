@@ -1,0 +1,36 @@
+<!doctype html>
+<html ng-app="tfApp">
+  <head>
+    <base href="/sample/">
+    <title ng-bind="MetaTags.title"></title>
+    <meta ng-repeat="(key, value) in MetaTags.properties" name="{{key}}" content="{{value}}" >
+  </head>
+  <body>
+
+    <ul>
+      <li>
+        <a ui-sref="app.home" id="btn-1">Main</a>
+      </li>
+      <li>
+        <a ui-sref="app.view1" id="btn-2">View 1</a>
+      </li>
+      <li>
+        <a ui-sref="app.view2" id="btn-3">View 2</a>
+      </li>
+    </ul>
+
+    <div ui-view></div>
+
+    <strong>MetaTags value:</strong>
+    <pre style="display: inline;">
+      {{MetaTags}}
+    </pre>
+
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="../src/tf-metatags.js"></script>
+
+    <script src="js/main.js"></script>
+
+  </body>
+</html>

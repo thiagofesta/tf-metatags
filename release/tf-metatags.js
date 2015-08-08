@@ -1,8 +1,9 @@
 /**
- * Thiago Felipe Festa (thiagofesta@gmail.com)
- * https://github.com/thiagofesta/tf-metatags
- *
- * Provides metatags to the routes
+ * Angular module for providing MetaTags support based on routes
+ * @version v0.0.1-dev-2015-08-08
+ * @link https://github.com/thiagofesta/tf-metatags
+ * @author Thiago Festa <thiagofesta@gmail.com>
+ * @license MIT License, http://www.opensource.org/licenses/MIT
  */
 angular.module('tf-metatags', ['ui.router'])
     .service('MetaTags', ['$rootScope', '$state', function ($rootScope, $state) {

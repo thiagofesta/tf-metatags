@@ -1,1 +1,13 @@
+# master only
+build
+site
+
+# common
+node_modules
+bower_components
 .DS_Store
+*~
+coverage
+
+# webstorm files
+.idea
