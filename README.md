@@ -35,7 +35,7 @@ For running JSHint
 
 For running unit tests
 
-   grunt test:unit
+    grunt test:unit
   
   
 ##### Running E2E Tests
