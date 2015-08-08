@@ -1,4 +1,4 @@
-# MetaTags 
+# MetaTags https://img.shields.io/travis/thiagofesta/tf-metatags.svg
 
 Angular module for providing MetaTags support based on routes.
 

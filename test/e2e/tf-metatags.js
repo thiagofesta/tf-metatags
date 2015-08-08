@@ -10,11 +10,11 @@ describe('Testing tf-metatags', function() {
 
       element.all(by.css('head meta')).then(function(items) {
         expect(items.length).toBe(1);
-
-        expect(items[0].getAttribute('name')).toBe('keywords');
-        expect(items[0].getAttribute('content')).toBe('metatags, meta, tags, thiagofesta');
       });
 
+      var keywords = element(by.css('head meta[name=keywords]'));
+      expect(keywords.getAttribute('name')).toBe('keywords');
+      expect(keywords.getAttribute('content')).toBe('metatags, meta, tags, thiagofesta');
     });
   };
 
@@ -27,14 +27,15 @@ describe('Testing tf-metatags', function() {
 
       element.all(by.css('head meta')).then(function(items) {
         expect(items.length).toBe(2);
-
-        expect(items[0].getAttribute('name')).toBe('description');
-        expect(items[0].getAttribute('content')).toBe('This is the view 1');
-
-        expect(items[1].getAttribute('name')).toBe('keywords');
-        expect(items[1].getAttribute('content')).toBe('override, the, descriptions');
       });
 
+      var keywords = element(by.css('head meta[name=keywords]'));
+      expect(keywords.getAttribute('name')).toBe('keywords');
+      expect(keywords.getAttribute('content')).toBe('override, the, descriptions');
+
+      var description = element(by.css('head meta[name=description]'));
+      expect(description.getAttribute('name')).toBe('description');
+      expect(description.getAttribute('content')).toBe('This is the view 1');
     });
   };
 
@@ -47,14 +48,15 @@ describe('Testing tf-metatags', function() {
 
       element.all(by.css('head meta')).then(function(items) {
         expect(items.length).toBe(2);
-
-        expect(items[0].getAttribute('name')).toBe('description');
-        expect(items[0].getAttribute('content')).toBe('This is the view 2');
-
-        expect(items[1].getAttribute('name')).toBe('keywords');
-        expect(items[1].getAttribute('content')).toBe('metatags, meta, tags, thiagofesta');
       });
 
+      var keywords = element(by.css('head meta[name=keywords]'));
+      expect(keywords.getAttribute('name')).toBe('keywords');
+      expect(keywords.getAttribute('content')).toBe('metatags, meta, tags, thiagofesta');
+
+      var description = element(by.css('head meta[name=description]'));
+      expect(description.getAttribute('name')).toBe('description');
+      expect(description.getAttribute('content')).toBe('This is the view 2');
     });
   };
 
