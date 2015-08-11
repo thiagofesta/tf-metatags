@@ -8,7 +8,5 @@ before_script:
   - npm install -g grunt-cli
 
 script:
-  - grunt test
-
-after_script:
-  - cat ./test/coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+  - grunt test:jshint
+  - grunt test:unit
