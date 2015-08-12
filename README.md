@@ -1,4 +1,8 @@
-# MetaTags [![Build Status](https://img.shields.io/travis/thiagofesta/tf-metatags.svg)](https://travis-ci.org/thiagofesta/tf-metatags)
+# MetaTags 
+
+[ ![Codeship Status for thiagofesta/tf-metatags](https://codeship.com/projects/af075410-1dd6-0133-13c3-0a18ce4642f2/status?branch=master)](https://codeship.com/projects/95120)
+
+[![Build Status TravisCI](https://img.shields.io/travis/thiagofesta/tf-metatags.svg)](https://travis-ci.org/thiagofesta/tf-metatags)
 
 Angular module for providing MetaTags support based on routes.
 
