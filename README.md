@@ -1,8 +1,6 @@
 # MetaTags 
 
-[ ![Codeship Status for thiagofesta/tf-metatags](https://codeship.com/projects/af075410-1dd6-0133-13c3-0a18ce4642f2/status?branch=master)](https://codeship.com/projects/95120)
-
-[![Build Status TravisCI](https://img.shields.io/travis/thiagofesta/tf-metatags.svg)](https://travis-ci.org/thiagofesta/tf-metatags)
+[ ![Codeship Status for thiagofesta/tf-metatags](https://img.shields.io/codeship/af075410-1dd6-0133-13c3-0a18ce4642f2.svg)](https://codeship.com/projects/95120) [![codecov.io](http://codecov.io/github/thiagofesta/tf-metatags/coverage.svg?branch=master)](http://codecov.io/github/thiagofesta/tf-metatags?branch=master)
 
 Angular module for providing MetaTags support based on routes.
 
