@@ -11,7 +11,7 @@
   "nonew": true,
   "plusplus": false,
   "undef": true,
-  "strict": true,
+  "strict": false,
   "trailing": true,
   "indent": 2,
   "laxcomma": true,
@@ -28,9 +28,9 @@
     "jasmine": true,
     "module": true,
     "inject": true,
-    "browser": true,
     "spyOn": true,
     "window": true,
+    "browser": true,
     "element": true,
     "by": true
   }

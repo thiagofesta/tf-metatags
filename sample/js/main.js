@@ -16,15 +16,19 @@ angular.module('tfApp', ['ui.router', 'tf-metatags'])
       templateUrl: 'views/view1.html',
       metaTags: {
         title: 'View 1',
-        description: 'This is the view 1',
-        keywords: 'override, the, descriptions'
+        properties: {
+          description: 'This is the view 1',
+          keywords: 'override, the, descriptions'
+        }
       }
     }).state('app.view2', {
       url: '/view2/',
       templateUrl: 'views/view2.html',
       metaTags: {
         title: 'View 2',
-        description: 'This is the view 2'
+        properties: {
+          description: 'This is the view 2'
+        }
       }
     });
     $urlRouterProvider.otherwise("/");
@@ -33,7 +37,9 @@ angular.module('tfApp', ['ui.router', 'tf-metatags'])
   .run(['MetaTags', function (MetaTags) {
 
     MetaTags.setDefaults({
-      keywords: 'metatags, meta, tags, thiagofesta'
+      properties: {
+        keywords: 'metatags, meta, tags, thiagofesta'
+      }
     });
 
     MetaTags.setTitleSuffix(' | MetaTags');

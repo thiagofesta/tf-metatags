@@ -1,143 +1,91 @@
-angular.module('tf-metatags', ['ui.router'])
-  .service('MetaTags', ['$rootScope', '$state', function ($rootScope, $state) {
+angular.module('tf-metatags', [])
+  .service('MetaTags', ['$rootScope', '$state', function($rootScope, $state) {
     'use strict';
 
     var self = this,
+      defaults = {},
       titlePrefix = '',
       titleSuffix = '',
-      defaults = {},
       callbacks = {};
 
-    /**
-     * @name MetaTags#build
-     * @description
-     * Builds the meta tags.
-     *
-     * @param {object} metaTags `metaTags` object from the `$state.current`.
-     */
-    function build(metaTags) {
-      metaTags = angular.extend(defaults, metaTags);
-      metaTags = buildTitle(metaTags);
-      expose(metaTags);
-    }
+    var mergeDefaults = function(metaTagsObj) {
+      var properties;
 
-    /**
-     * @name MetaTags#buildTitle
-     * @description
-     * Gets a `metaTags` object with no title or a title no "fixed" and add prefix and suffix on it.
-     *
-     * @param {object} metaTags `metaTags` object with title not prefixed/suffixed.
-     * @returns {object} Returns `metaTags` object with title prefixed/suffixed.
-     */
-    function buildTitle(metaTags) {
-      if(metaTags && !metaTags.title) {
-        metaTags.title = '';
+      if(defaults.properties) {
+        properties = angular.extend({}, defaults.properties, metaTagsObj.properties);
       }
 
-      metaTags.title = titlePrefix + metaTags.title + titleSuffix;
+      metaTagsObj = angular.extend({}, defaults, metaTagsObj);
 
-      return metaTags;
-    }
+      if(properties) {
+        metaTagsObj.properties = properties;
+      }
 
-    /**
-     * @name MetaTags#expose
-     * @description
-     * Expose the generated `metaTags` to `$rootScope`.
-     *
-     * Note: the `$rootScope.MetaTags` object has this patter: `{ title: '', properties: { [list of properties] } }`
-     *
-     * @param {object} metaTags `metaTags` object from the `$state.current`.
-     */
-    function expose(metaTags) {
-      var obj = {
-        title: '',
-        properties: {}
-      };
+      return metaTagsObj;
+    };
 
-      angular.forEach(metaTags, function(value, key) {
+    var updateTitle = function(metaTagsObj) {
+      var title = titlePrefix + (metaTagsObj.title || '') + titleSuffix;
 
-        switch (key) {
-          case 'title':
-            obj.title = value;
-            break;
+      if(title) {
+        metaTagsObj.title = title;
+      }
 
-          default:
-            obj.properties[key] = value;
-        }
+      return metaTagsObj;
+    };
 
-      });
+    self.setDefaults = function(obj) {
+      defaults = obj;
+    };
+    self.getDefaults = function() {
+      return defaults;
+    };
 
-      $rootScope.MetaTags = obj;
-    }
-
-
-
-    // Public
-
-    /**
-     * @name MetaTags#setTitlePrefix
-     * @description
-     * Set a title prefix.
-     *
-     * @param {string} prefix The title prefix.
-     */
     self.setTitlePrefix = function(prefix) {
       titlePrefix = prefix;
     };
+    self.getTitlePrefix = function() {
+      return titlePrefix;
+    };
 
-    /**
-     * @name MetaTags#setTitleSuffix
-     * @description
-     * Set a title suffix.
-     *
-     * @param {string} suffix The title suffix.
-     */
     self.setTitleSuffix = function(suffix) {
       titleSuffix = suffix;
     };
-
-    /**
-     * @name MetaTags#setDefaults
-     * @description
-     * Set the default `metaTags` object.
-     * It's will be used when not passed by each route.
-     *
-     * @param {object} options The default options.
-     */
-    self.setDefaults = function(options) {
-      defaults = angular.extend(defaults, options);
+    self.getTitleSuffix = function() {
+      return titleSuffix;
     };
 
-    /**
-     * @name MetaTags#addCallback
-     * @description
-     * Adds a callback.
-     *
-     * @param {string} callbackName The callback name. Sample: `afterChange`.
-     * @param {function} callbackFn The callback function.
-     */
     self.addCallback = function(callbackName, callbackFn) {
-      if(!callbacks[callbackName]) {
-        callbacks[callbackName] = callbackFn;
+      callbacks[callbackName] = callbackFn;
+    };
+    self.getCallback = function(callbackName) {
+      if(callbackName) {
+        return callbacks[callbackName];
+      }
+
+      return callbacks;
+    };
+
+    self.current = {};
+
+    self.update = function() {
+      if(typeof callbacks.beforeChange === 'function') {
+        callbacks.beforeChange();
+      }
+
+      var metaTagsObj = mergeDefaults($state.current.metaTags || {});
+      metaTagsObj = updateTitle(metaTagsObj);
+
+      self.current = metaTagsObj;
+      $rootScope.MetaTags = self.current;
+
+      if(typeof callbacks.afterChange === 'function') {
+        callbacks.afterChange();
       }
     };
 
-    /**
-     * @name MetaTags#init
-     * @description
-     * Initializes the MetaTags service.
-     * It needs to be called on the main app `run` method/phase.
-     *
-     * It keeps listening to `$stateChangeSuccess` event and build the new data.
-     */
     self.init = function() {
-      $rootScope.$on('$stateChangeSuccess', function() {
-        build($state.current.metaTags || {});
-
-        if(typeof callbacks.afterChange === 'function') {
-          callbacks.afterChange();
-        }
-      });
+      $rootScope.$on('$stateChangeSuccess', self.update);
     };
 
     return self;
