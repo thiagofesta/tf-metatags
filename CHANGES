@@ -1,0 +1,20 @@
+Version 0.1.0
+ - shield.io
+ - No more travis
+ - Reports
+ - Fix travis
+ - More tests
+ - Trying coveralls
+ - Removed protractor from travis; fixed the badge
+ - Fixed jshint; better e2e tests; added build badge
+ - adding extension
+ - test commit
+ - Added travis
+ - Docs
+ - Docs
+ - ignore some files
+ - Improving the code
+ - Fixing typo
+ - Added beta version
+ - first commit
+
