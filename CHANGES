@@ -1,3 +1,10 @@
+Version 0.2.0:
+ - adding execute permissions
+ - Merge pull request #1 from thiagofesta/dev
+ - Added bumpversion.sh
+ - Merge remote-tracking branch 'origin/master' into dev
+ - Rewrote using TDD
+
 Version 0.1.0
  - shield.io
  - No more travis
