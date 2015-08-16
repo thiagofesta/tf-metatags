@@ -15,15 +15,12 @@ module.exports = function(config) {
       '../sample/bower_components/angular-ui-router/release/angular-ui-router.js',
       '../sample/bower_components/angular-mocks/angular-mocks.js',
       '../src/*.js',
-      '../sample/js/*.js',
-      'unit/*.js',
-      '../sample/**/*.html'
+      'unit/*.js'
     ],
 
     reporters: ['progress', 'coverage'],
 
     preprocessors: {
-      '../sample/**/*.html': 'html2js',
       '../src/*.js': ['coverage']
     },
 
@@ -34,17 +31,13 @@ module.exports = function(config) {
           subdir: 'report-html'
         },
         {
-          type: 'lcov', subdir: 'report-lcov'
+          type: 'lcov',
+          subdir: 'report-lcov'
         },
         {
           type: 'text'
         }
       ]
-    },
-
-    ngHtml2JsPreprocessor: {
-      // strip app from the file path
-      stripPrefix: 'sample/'
     },
 
     exclude: [],
