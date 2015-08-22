@@ -15,6 +15,10 @@
     "Thiago Festa <thiagofesta@gmail.com> (http://thiagofesta.com)"
   ],
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/thiagofesta/tf-metatags.git"
+  },
   "devDependencies": {
     "bower": "^1.4.1",
     "coveralls": "^2.11.4",
