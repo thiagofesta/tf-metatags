@@ -1,13 +1,13 @@
-describe('Testing Service: MetaTags', function() {
+describe('Testing Service: tfMetaTags', function() {
 
-  var MetaTags,
+  var tfMetaTags,
     $rootScope,
     $state;
 
-  beforeEach(module('tf-metatags'));
+  beforeEach(module('tf.metatags'));
 
   beforeEach(function() {
-    module('tf-metatags', function ($provide) {
+    module('tf.metatags', function ($provide) {
       $provide.value('$rootScope', {
         $on: jasmine.createSpy()
       });
@@ -16,72 +16,72 @@ describe('Testing Service: MetaTags', function() {
         current: {}
       });
     });
-    inject(function (_MetaTags_, _$rootScope_, _$state_) {
-      MetaTags = _MetaTags_;
+    inject(function (_tfMetaTags_, _$rootScope_, _$state_) {
+      tfMetaTags = _tfMetaTags_;
       $rootScope = _$rootScope_;
       $state = _$state_;
     });
   });
 
-  it('should return a service called MetaTags', function() {
-    expect(MetaTags).toBeDefined();
-    expect(MetaTags).toEqual(jasmine.any(Object));
+  it('should return a service called tfMetaTags', function() {
+    expect(tfMetaTags).toBeDefined();
+    expect(tfMetaTags).toEqual(jasmine.any(Object));
   });
 
   it('should be able to (set/get)Defaults', function() {
-    expect(MetaTags.setDefaults).toBeDefined();
-    expect(MetaTags.setDefaults).toEqual(jasmine.any(Function));
-    expect(MetaTags.getDefaults).toBeDefined();
-    expect(MetaTags.getDefaults).toEqual(jasmine.any(Function));
+    expect(tfMetaTags.setDefaults).toBeDefined();
+    expect(tfMetaTags.setDefaults).toEqual(jasmine.any(Function));
+    expect(tfMetaTags.getDefaults).toBeDefined();
+    expect(tfMetaTags.getDefaults).toEqual(jasmine.any(Function));
 
-    expect(MetaTags.getDefaults()).toEqual({});
+    expect(tfMetaTags.getDefaults()).toEqual({});
 
     var obj = {
-      title: 'TF MetaTags',
+      title: 'TF tfMetaTags',
       properties: {
         description: 'Describes a homepage'
       }
     };
 
-    MetaTags.setDefaults(obj);
+    tfMetaTags.setDefaults(obj);
 
-    expect(MetaTags.getDefaults()).toEqual(obj);
+    expect(tfMetaTags.getDefaults()).toEqual(obj);
   });
 
   it('should be able to (set/get)TitlePrefix', function() {
-    expect(MetaTags.setTitlePrefix).toBeDefined();
-    expect(MetaTags.setTitlePrefix).toEqual(jasmine.any(Function));
-    expect(MetaTags.getTitlePrefix).toBeDefined();
-    expect(MetaTags.getTitlePrefix).toEqual(jasmine.any(Function));
+    expect(tfMetaTags.setTitlePrefix).toBeDefined();
+    expect(tfMetaTags.setTitlePrefix).toEqual(jasmine.any(Function));
+    expect(tfMetaTags.getTitlePrefix).toBeDefined();
+    expect(tfMetaTags.getTitlePrefix).toEqual(jasmine.any(Function));
 
-    expect(MetaTags.getTitlePrefix()).toBe('');
+    expect(tfMetaTags.getTitlePrefix()).toBe('');
 
-    MetaTags.setTitlePrefix('MetaTags ');
+    tfMetaTags.setTitlePrefix('tfMetaTags ');
 
-    expect(MetaTags.getTitlePrefix()).toBe('MetaTags ');
+    expect(tfMetaTags.getTitlePrefix()).toBe('tfMetaTags ');
   });
 
   it('should be able to (set/get)TitleSuffix', function() {
-    expect(MetaTags.setTitleSuffix).toBeDefined();
-    expect(MetaTags.setTitleSuffix).toEqual(jasmine.any(Function));
-    expect(MetaTags.getTitleSuffix).toBeDefined();
-    expect(MetaTags.getTitleSuffix).toEqual(jasmine.any(Function));
+    expect(tfMetaTags.setTitleSuffix).toBeDefined();
+    expect(tfMetaTags.setTitleSuffix).toEqual(jasmine.any(Function));
+    expect(tfMetaTags.getTitleSuffix).toBeDefined();
+    expect(tfMetaTags.getTitleSuffix).toEqual(jasmine.any(Function));
 
-    expect(MetaTags.getTitleSuffix()).toBe('');
+    expect(tfMetaTags.getTitleSuffix()).toBe('');
 
-    MetaTags.setTitleSuffix(' | TF');
+    tfMetaTags.setTitleSuffix(' | TF');
 
-    expect(MetaTags.getTitleSuffix()).toBe(' | TF');
+    expect(tfMetaTags.getTitleSuffix()).toBe(' | TF');
   });
 
   it('should have a current property', function() {
-    expect(MetaTags.current).toBeDefined();
-    expect(MetaTags.current).toEqual({});
+    expect(tfMetaTags.current).toBeDefined();
+    expect(tfMetaTags.current).toEqual({});
   });
 
   it('should have an update method', function() {
-    expect(MetaTags.update).toBeDefined();
-    expect(MetaTags.update).toEqual(jasmine.any(Function));
+    expect(tfMetaTags.update).toBeDefined();
+    expect(tfMetaTags.update).toEqual(jasmine.any(Function));
   });
 
   describe('should update correctly', function() {
@@ -89,14 +89,14 @@ describe('Testing Service: MetaTags', function() {
     it('when have nothing', function() {
       $state.current = {};
 
-      MetaTags.update();
+      tfMetaTags.update();
 
-      expect(MetaTags.current).toEqual({});
+      expect(tfMetaTags.current).toEqual({});
     });
 
     it('when have only title and description and setDefaults', function() {
       $state.current = {
-        metaTags: {
+        tfMetaTags: {
           title: 'Homepage',
           properties: {
             description: 'Description of homepage'
@@ -104,7 +104,7 @@ describe('Testing Service: MetaTags', function() {
         }
       };
 
-      MetaTags.setDefaults({
+      tfMetaTags.setDefaults({
         title: 'Title',
         properties: {
           description: 'Desc',
@@ -112,9 +112,9 @@ describe('Testing Service: MetaTags', function() {
         }
       });
 
-      MetaTags.update();
+      tfMetaTags.update();
 
-      expect(MetaTags.current).toEqual({
+      expect(tfMetaTags.current).toEqual({
         title: 'Homepage',
         properties: {
           description: 'Description of homepage',
@@ -125,7 +125,7 @@ describe('Testing Service: MetaTags', function() {
 
     it('when have only title and description and setTitlePrefix and setTitleSuffix', function() {
       $state.current = {
-        metaTags: {
+        tfMetaTags: {
           title: 'Homepage',
           properties: {
             description: 'Description of homepage'
@@ -133,12 +133,12 @@ describe('Testing Service: MetaTags', function() {
         }
       };
 
-      MetaTags.setTitlePrefix('Pre ');
-      MetaTags.setTitleSuffix(' | TF');
+      tfMetaTags.setTitlePrefix('Pre ');
+      tfMetaTags.setTitleSuffix(' | TF');
 
-      MetaTags.update();
+      tfMetaTags.update();
 
-      expect(MetaTags.current).toEqual({
+      expect(tfMetaTags.current).toEqual({
         title: 'Pre Homepage | TF',
         properties: {
           description: 'Description of homepage'
@@ -149,18 +149,18 @@ describe('Testing Service: MetaTags', function() {
     it('when have nothing and use setTitlePrefix and setTitleSuffix', function() {
       $state.current = {};
 
-      MetaTags.setTitlePrefix('Pre ');
-      MetaTags.setTitleSuffix(' | TF');
-      MetaTags.update();
+      tfMetaTags.setTitlePrefix('Pre ');
+      tfMetaTags.setTitleSuffix(' | TF');
+      tfMetaTags.update();
 
-      expect(MetaTags.current).toEqual({
+      expect(tfMetaTags.current).toEqual({
         title: 'Pre  | TF'
       });
     });
 
     it('when has title, description and keywords', function() {
       $state.current = {
-        metaTags: {
+        tfMetaTags: {
           title: 'Homepage',
           properties: {
             description: 'The homepage',
@@ -169,51 +169,51 @@ describe('Testing Service: MetaTags', function() {
         }
       };
 
-      MetaTags.update();
+      tfMetaTags.update();
 
-      expect(MetaTags.current).toEqual($state.current.metaTags);
+      expect(tfMetaTags.current).toEqual($state.current.tfMetaTags);
     });
 
   });
 
   it('should have an init method which listen for $stateChangeSuccess on the $rootScope', function() {
-    expect(MetaTags.init).toBeDefined();
-    expect(MetaTags.init).toEqual(jasmine.any(Function));
+    expect(tfMetaTags.init).toBeDefined();
+    expect(tfMetaTags.init).toEqual(jasmine.any(Function));
 
-    MetaTags.init();
+    tfMetaTags.init();
 
-    expect($rootScope.$on).toHaveBeenCalledWith('$stateChangeSuccess', MetaTags.update);
+    expect($rootScope.$on).toHaveBeenCalledWith('$stateChangeSuccess', tfMetaTags.update);
   });
 
-  it('when calling update method it should register MetaTags.current on the $rootScope.MetaTags', function() {
-    MetaTags.update();
+  it('when calling update method it should register tfMetaTags.current on the $rootScope.tfMetaTags', function() {
+    tfMetaTags.update();
 
-    expect($rootScope.MetaTags).toBe(MetaTags.current);
+    expect($rootScope.tfMetaTags).toBe(tfMetaTags.current);
   });
 
   it('should be able to add a callbacks', function() {
-    expect(MetaTags.addCallback).toBeDefined();
-    expect(MetaTags.addCallback).toEqual(jasmine.any(Function));
-    expect(MetaTags.getCallback).toBeDefined();
-    expect(MetaTags.getCallback).toEqual(jasmine.any(Function));
+    expect(tfMetaTags.addCallback).toBeDefined();
+    expect(tfMetaTags.addCallback).toEqual(jasmine.any(Function));
+    expect(tfMetaTags.getCallback).toBeDefined();
+    expect(tfMetaTags.getCallback).toEqual(jasmine.any(Function));
 
     var fn = function() {};
-    MetaTags.addCallback('afterChange', fn);
+    tfMetaTags.addCallback('afterChange', fn);
 
-    expect(MetaTags.getCallback()).toEqual({
+    expect(tfMetaTags.getCallback()).toEqual({
       afterChange: jasmine.any(Function)
     });
-    expect(MetaTags.getCallback('afterChange')).toBe(fn);
-    expect(MetaTags.getCallback('beforeChange')).toBeUndefined();
+    expect(tfMetaTags.getCallback('afterChange')).toBe(fn);
+    expect(tfMetaTags.getCallback('beforeChange')).toBeUndefined();
   });
 
   it('should call the beforeChange callback when its set', function() {
     var callbacks = {
       beforeChange: jasmine.createSpy()
     };
-    MetaTags.addCallback('beforeChange', callbacks.beforeChange);
+    tfMetaTags.addCallback('beforeChange', callbacks.beforeChange);
 
-    MetaTags.update();
+    tfMetaTags.update();
 
     expect(callbacks.beforeChange).toHaveBeenCalled();
   });
@@ -222,9 +222,9 @@ describe('Testing Service: MetaTags', function() {
     var callbacks = {
       afterChange: jasmine.createSpy()
     };
-    MetaTags.addCallback('afterChange', callbacks.afterChange);
+    tfMetaTags.addCallback('afterChange', callbacks.afterChange);
 
-    MetaTags.update();
+    tfMetaTags.update();
 
     expect(callbacks.afterChange).toHaveBeenCalled();
   });
