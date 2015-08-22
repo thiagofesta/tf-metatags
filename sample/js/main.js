@@ -8,13 +8,13 @@ angular.module('tfApp', ['ui.router', 'tf.metatags'])
     }).state('app.home', {
       url: '/',
       templateUrl: 'views/main.html',
-      metaTags: {
+      tfMetaTags: {
         title: 'Main'
       }
     }).state('app.view1', {
       url: '/view1/',
       templateUrl: 'views/view1.html',
-      metaTags: {
+      tfMetaTags: {
         title: 'View 1',
         properties: {
           description: 'This is the view 1',
@@ -24,7 +24,7 @@ angular.module('tfApp', ['ui.router', 'tf.metatags'])
     }).state('app.view2', {
       url: '/view2/',
       templateUrl: 'views/view2.html',
-      metaTags: {
+      tfMetaTags: {
         title: 'View 2',
         properties: {
           description: 'This is the view 2'
@@ -34,16 +34,16 @@ angular.module('tfApp', ['ui.router', 'tf.metatags'])
     $urlRouterProvider.otherwise("/");
 
   }])
-  .run(['MetaTags', function (MetaTags) {
+  .run(['tfMetaTags', function (tfMetaTags) {
 
-    MetaTags.setDefaults({
+    tfMetaTags.setDefaults({
       properties: {
         keywords: 'metatags, meta, tags, thiagofesta'
       }
     });
 
-    MetaTags.setTitleSuffix(' | MetaTags');
+    tfMetaTags.setTitleSuffix(' | MetaTags');
 
-    MetaTags.init();
+    tfMetaTags.init();
 
   }]);
