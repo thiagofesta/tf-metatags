@@ -2,8 +2,8 @@
 <html ng-app="tfApp">
   <head>
     <base href="/sample/">
-    <title ng-bind="MetaTags.title"></title>
-    <meta ng-repeat="(key, value) in MetaTags.properties" name="{{key}}" content="{{value}}" >
+    <title ng-bind="tfMetaTags.title"></title>
+    <meta ng-repeat="(key, value) in tfMetaTags.properties" name="{{key}}" content="{{value}}" >
   </head>
   <body>
 
@@ -21,9 +21,9 @@
 
     <div ui-view></div>
 
-    <strong>MetaTags value:</strong>
+    <strong>tfMetaTags value:</strong>
     <pre style="display: inline;">
-      {{MetaTags}}
+      {{tfMetaTags}}
     </pre>
 
     <script src="bower_components/angular/angular.js"></script>
