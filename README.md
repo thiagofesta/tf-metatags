@@ -1,6 +1,6 @@
 # MetaTags 
 
-[ ![Codeship Status for thiagofesta/tf-metatags](https://img.shields.io/codeship/af075410-1dd6-0133-13c3-0a18ce4642f2.svg)](https://codeship.com/projects/95120) [![codecov.io](https://img.shields.io/codecov/c/github/thiagofesta/tf-metatags.svg)](http://codecov.io/github/thiagofesta/tf-metatags?branch=master) [![bower.io](https://img.shields.io/bower/v/tf-metatags.svg)](http://bower.io/search/?q=tf-metatags)  [![npm](https://img.shields.io/npm/v/tf-metatags.svg)](https://www.npmjs.com/package/tf-metatags) 
+[ ![Codeship Status for thiagofesta/tf-metatags](https://img.shields.io/codeship/af075410-1dd6-0133-13c3-0a18ce4642f2.svg)](https://codeship.com/projects/95120) [![Build Status TravisCI](https://img.shields.io/travis/thiagofesta/tf-metatags.svg)](https://travis-ci.org/thiagofesta/tf-metatags) [![codecov.io](https://img.shields.io/codecov/c/github/thiagofesta/tf-metatags.svg)](http://codecov.io/github/thiagofesta/tf-metatags?branch=master) [![bower.io](https://img.shields.io/bower/v/tf-metatags.svg)](http://bower.io/search/?q=tf-metatags)  [![npm](https://img.shields.io/npm/v/tf-metatags.svg)](https://www.npmjs.com/package/tf-metatags) 
 
 Angular module for providing MetaTags support based on routes.
 
