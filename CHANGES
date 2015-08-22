@@ -1,3 +1,13 @@
+Version 0.3.0:
+ - Added repository info
+ - Added shield
+ - Added coveralls to travis
+ - Added coveralls
+ - Added badge for travis
+ - Add travis support
+ - Added npm badge
+ - Added more data to the package.json and bower.json
+
 Version 0.2.1:
 
 
