@@ -8,3 +8,6 @@ before_script:
 script:
   - grunt test:jshint
   - grunt test:unit
+
+after_script:
+  - cat ./test/coverage/report-lcov/lcov.info | ./node_modules/coveralls/bin/coveralls.js
