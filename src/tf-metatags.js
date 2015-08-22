@@ -1,4 +1,4 @@
-angular.module('tf-metatags', [])
+angular.module('tf.metatags', [])
   .service('MetaTags', ['$rootScope', '$state', function($rootScope, $state) {
     'use strict';
 

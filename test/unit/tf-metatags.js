@@ -4,10 +4,10 @@ describe('Testing Service: MetaTags', function() {
     $rootScope,
     $state;
 
-  beforeEach(module('tf-metatags'));
+  beforeEach(module('tf.metatags'));
 
   beforeEach(function() {
-    module('tf-metatags', function ($provide) {
+    module('tf.metatags', function ($provide) {
       $provide.value('$rootScope', {
         $on: jasmine.createSpy()
       });

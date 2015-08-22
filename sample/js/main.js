@@ -1,4 +1,4 @@
-angular.module('tfApp', ['ui.router', 'tf-metatags'])
+angular.module('tfApp', ['ui.router', 'tf.metatags'])
   .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 
     $stateProvider.state('app', {
