@@ -4,13 +4,89 @@
 
 Angular module for providing MetaTags support based on routes.
 
-## Testing
+Inspired from [angular-metatags](https://github.com/AvraamMavridis/angular-metatags) and used some ideas from [ui-router-metatags](https://github.com/tinusn/ui-router-metatags).
+
+## Installation
+
+Download [tf-metatags.min.js](https://raw.githubusercontent.com/thiagofesta/tf-metatags/master/release/tf-metatags.min.js) and include it on your page
+
+```html
+<script src="tf-metatags.min.js"></script>
+```
+
+Include it in your module declaration
+
+```javascript
+angular.module('myApp', ['ui.router', 'tf.metatags']);
+```
+
+Add the MetaTags service to your page
+
+```html
+<title ng-bind="tfMetaTags.title"></title>
+<meta ng-repeat="(key, value) in tfMetaTags.properties" name="{{key}}" content="{{value}}" >
+```
+
+Then configure defaults
+
+```javascript
+angular
+  .module('myApp')
+  .run(['tfMetaTags', function (tfMetaTags) {
+
+    tfMetaTags.setDefaults({
+      title: 'Default Title',
+      properties: {
+        keywords: 'keyword1, keyword2'
+      }
+    });
+
+    tfMetaTags.setTitleSuffix(' | MetaTags');
+    tfMetaTags.setTitlePrefix('Prefix ');
+
+    tfMetaTags.init();
+
+  }]);
+```
+
+And finally decorate the routes with tfMetaTags:
+
+```javascript
+$stateProvider
+  .state('home', {
+    url: '/',
+    tfMetaTags: {
+      title: 'Home',
+      properties: {
+        description: 'This is the homepage',
+        keywords: 'keyword1, keyword2',
+        'og:title': 'Home',
+        'twitter:title': 'Home'
+      }
+    }
+  });
+```
+
+## SEO concerns
+
+Until the search engine bots will be able to execute javascript properly you will have to use a tool like [prerender.io](https://prerender.io/) or [brombone](http://www.brombone.com/) to serve prerendered pages when a bot visit your site. 
+
+You can read more for the topic on the following articles:
+
+-[Weluse.de - Angular & SEO finally a piece of cake](https://weluse.de/blog/angularjs-seo-finally-a-piece-of-cake.html)
+
+-[Builtvisible.com - The Basics of JavaScript Framework SEO in AngularJS](http://builtvisible.com/javascript-framework-seo/)
+
+-[Yearofmoo.com - AngularJS and SEO](http://www.yearofmoo.com/2012/11/angularjs-and-seo.html)
+
+
+## Running sample app & Testing
 
 First you need to install the dependencies
 
     npm install
 
-Now you are able to have the server up and runing. Go and start the server
+Now you are able to have the server up and running. Go and start the server
 
     grunt server
   
