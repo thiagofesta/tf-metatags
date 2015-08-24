@@ -1,3 +1,12 @@
+Version 0.3.1:
+ - Added docs
+ - Version bump to 0.3.0 (fix CHANGES)
+ - Merge branch 'master' of github.com:thiagofesta/tf-metatags
+ - Merge pull request #2 from thiagofesta/0.3.0
+ - Added version 0.3.0
+ - Updated state property from metaTags to tfMetaTags; updated service from MetaTags to tfMetaTags; updated sample app
+ - renamed from tf-metatags to tf.metatags to follow angular name convention
+
 Version 0.3.0:
  - Merge branch 'master' of github.com:thiagofesta/tf-metatags
  - Version bump to 0.3.0
