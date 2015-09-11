@@ -1,3 +1,8 @@
+Version 0.3.2:
+ - Releasing v0.3.2; previous version 0.3.1 the release folder was not built
+ - Added badge for codeclimate
+ - added excludes for code climate
+
 Version 0.3.1:
  - clean up bad bump
  - Added version 0.3.1
