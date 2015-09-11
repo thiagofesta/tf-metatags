@@ -1,12 +1,12 @@
 /**
- * Angular module for providing MetaTags support based on routes
- * @version v0.0.1-dev-2015-08-15
+ * Angular module for providing MetaTags support based on routes.
+ * @version v0.3.2-dev-2015-09-11
  * @link https://github.com/thiagofesta/tf-metatags
- * @author Thiago Festa <thiagofesta@gmail.com>
+ * @author Thiago Festa <thiagofesta@gmail.com> (http://thiagofesta.com)
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
-angular.module('tf-metatags', [])
-  .service('MetaTags', ['$rootScope', '$state', function($rootScope, $state) {
+angular.module('tf.metatags', [])
+  .service('tfMetaTags', ['$rootScope', '$state', function($rootScope, $state) {
     'use strict';
 
     var self = this,
@@ -80,11 +80,11 @@ angular.module('tf-metatags', [])
         callbacks.beforeChange();
       }
 
-      var metaTagsObj = mergeDefaults($state.current.metaTags || {});
+      var metaTagsObj = mergeDefaults($state.current.tfMetaTags || {});
       metaTagsObj = updateTitle(metaTagsObj);
 
       self.current = metaTagsObj;
-      $rootScope.MetaTags = self.current;
+      $rootScope.tfMetaTags = self.current;
 
       if(typeof callbacks.afterChange === 'function') {
         callbacks.afterChange();
