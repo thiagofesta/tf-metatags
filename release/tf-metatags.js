@@ -1,100 +1,142 @@
 /**
  * Angular module for providing MetaTags support based on routes.
- * @version v0.3.2-dev-2015-09-11
+ * @version v0.3.2-dev-2015-09-12
  * @link https://github.com/thiagofesta/tf-metatags
  * @author Thiago Festa <thiagofesta@gmail.com> (http://thiagofesta.com)
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
-angular.module('tf.metatags', [])
-  .service('tfMetaTags', ['$rootScope', '$state', function($rootScope, $state) {
-    'use strict';
+(function () {
+  'use strict';
 
+  angular
+    .module('tf.metatags', [])
+    .provider('tfMetaTags', tfMetaTagsProvider)
+    .run(runBlock);
+
+  /* @ngInject */
+  function tfMetaTagsProvider() {
+    /* jshint validthis:true */
     var self = this,
       defaults = {},
       titlePrefix = '',
       titleSuffix = '',
       callbacks = {};
 
-    var mergeDefaults = function(metaTagsObj) {
+    self.setDefaults = setDefaults;
+    self.getDefaults = getDefaults;
+
+    self.setTitlePrefix = setTitlePrefix;
+    self.getTitlePrefix = getTitlePrefix;
+
+    self.setTitleSuffix = setTitleSuffix;
+    self.getTitleSuffix = getTitleSuffix;
+
+    self.addCallback = addCallback;
+    self.getCallback = getCallback;
+
+    self.current = {};
+
+    self.$get = tfMetaTags;
+
+    //////////////////////////
+
+    function setDefaults(obj) {
+      defaults = obj;
+    }
+    function getDefaults() {
+      return defaults;
+    }
+
+    function setTitlePrefix(prefix) {
+      titlePrefix = prefix;
+    }
+    function getTitlePrefix() {
+      return titlePrefix;
+    }
+
+    function setTitleSuffix(suffix) {
+      titleSuffix = suffix;
+    }
+    function getTitleSuffix() {
+      return titleSuffix;
+    }
+
+    function addCallback(callbackName, callbackFn) {
+      callbacks[callbackName] = callbackFn;
+    }
+    function getCallback(callbackName) {
+      if (callbackName) {
+        return callbacks[callbackName];
+      }
+
+      return callbacks;
+    }
+
+    function mergeDefaults(metaTagsObj) {
       var properties;
 
-      if(defaults.properties) {
+      if (defaults.properties) {
         properties = angular.extend({}, defaults.properties, metaTagsObj.properties);
       }
 
       metaTagsObj = angular.extend({}, defaults, metaTagsObj);
 
-      if(properties) {
+      if (properties) {
         metaTagsObj.properties = properties;
       }
 
       return metaTagsObj;
-    };
+    }
 
-    var updateTitle = function(metaTagsObj) {
+    function updateTitle(metaTagsObj) {
       var title = titlePrefix + (metaTagsObj.title || '') + titleSuffix;
 
-      if(title) {
+      if (title) {
         metaTagsObj.title = title;
       }
 
       return metaTagsObj;
-    };
+    }
 
-    self.setDefaults = function(obj) {
-      defaults = obj;
-    };
-    self.getDefaults = function() {
-      return defaults;
-    };
+    /* @ngInject */
+    function tfMetaTags($rootScope, $state) {
 
-    self.setTitlePrefix = function(prefix) {
-      titlePrefix = prefix;
-    };
-    self.getTitlePrefix = function() {
-      return titlePrefix;
-    };
+      self.update = update;
+      self.initialize = initialize;
 
-    self.setTitleSuffix = function(suffix) {
-      titleSuffix = suffix;
-    };
-    self.getTitleSuffix = function() {
-      return titleSuffix;
-    };
+      /////////////////////
 
-    self.addCallback = function(callbackName, callbackFn) {
-      callbacks[callbackName] = callbackFn;
-    };
-    self.getCallback = function(callbackName) {
-      if(callbackName) {
-        return callbacks[callbackName];
+      function update() {
+        if (typeof callbacks.beforeChange === 'function') {
+          callbacks.beforeChange();
+        }
+
+        var metaTagsObj = mergeDefaults($state.current.tfMetaTags || {});
+        metaTagsObj = updateTitle(metaTagsObj);
+
+        self.current = metaTagsObj;
+        $rootScope.tfMetaTags = self.current;
+
+        if (typeof callbacks.afterChange === 'function') {
+          callbacks.afterChange();
+        }
       }
 
-      return callbacks;
-    };
-
-    self.current = {};
-
-    self.update = function() {
-      if(typeof callbacks.beforeChange === 'function') {
-        callbacks.beforeChange();
+      function initialize() {
+        $rootScope.$on('$stateChangeSuccess', self.update);
       }
 
-      var metaTagsObj = mergeDefaults($state.current.tfMetaTags || {});
-      metaTagsObj = updateTitle(metaTagsObj);
+      // Expose to Service same methods that the Provider have
+      return self;
+    }
+    tfMetaTags.$inject = ['$rootScope', '$state'];
 
-      self.current = metaTagsObj;
-      $rootScope.tfMetaTags = self.current;
+  }
 
-      if(typeof callbacks.afterChange === 'function') {
-        callbacks.afterChange();
-      }
-    };
+  /* @ngInject */
+  function runBlock(tfMetaTags) {
+    tfMetaTags.initialize();
+  }
+  runBlock.$inject = ['tfMetaTags'];
 
-    self.init = function() {
-      $rootScope.$on('$stateChangeSuccess', self.update);
-    };
-
-    return self;
-
-  }]);
+})();

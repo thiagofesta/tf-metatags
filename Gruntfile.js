@@ -50,29 +50,47 @@ module.exports = function(grunt) {
 
       ],
       unit: {
-        options: {
-          jshintrc: 'test/.jshintrc'
-        },
         src: ['test/unit/{,*/}*.js']
       },
       e2e: {
-        options: {
-          jshintrc: 'test/.jshintrc'
-        },
+        src: ['test/e2e/{,*/}*.js']
+      }
+    },
+
+    jscs: {
+      options: {
+        config: '.jscsrc',
+        reporter: require('jscs-stylish').path
+      },
+      metatags: [
+        'Gruntfile.js',
+        'src/*.js'
+      ],
+      sample: [
+
+      ],
+      unit: {
+        src: ['test/unit/{,*/}*.js']
+      },
+      e2e: {
         src: ['test/e2e/{,*/}*.js']
       }
     },
 
     karma: {
-      unit: {
+      src: {
         configFile: 'test/karma.conf.js',
+        singleRun: true
+      },
+      build: {
+        configFile: 'test/karma-build.conf.js',
         singleRun: true
       }
     },
 
     protractor: {
       options: {
-        configFile: "test/protractor.conf.js",
+        configFile: 'test/protractor.conf.js',
         noColor: false
       },
       e2e: {
@@ -120,7 +138,8 @@ module.exports = function(grunt) {
     'test',
     'ngAnnotate:src',
     'concat:build',
-    'uglify:build'
+    'uglify:build',
+    'karma:build'
   ]);
 
   grunt.registerTask('server', [
@@ -130,7 +149,8 @@ module.exports = function(grunt) {
   grunt.registerTask('test', [
     'connect:test',
     'jshint',
-    'karma',
+    'jscs',
+    'karma:src',
     'protractor:e2e'
   ]);
 
@@ -138,8 +158,12 @@ module.exports = function(grunt) {
     'jshint'
   ]);
 
+  grunt.registerTask('test:jscs', [
+    'jscs'
+  ]);
+
   grunt.registerTask('test:unit', [
-    'karma'
+    'karma:src'
   ]);
 
   grunt.registerTask('test:e2e', [

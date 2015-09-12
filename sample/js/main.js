@@ -1,5 +1,22 @@
-angular.module('tfApp', ['ui.router', 'tf.metatags'])
-  .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
+(function () {
+  'use strict';
+
+  angular
+    .module('tfApp', [
+      'ui.router',
+      'tf.metatags'
+    ])
+    .config(tfAppConfig);
+
+  /* @ngInject */
+  function tfAppConfig($stateProvider, $urlRouterProvider, tfMetaTagsProvider) {
+
+    tfMetaTagsProvider.setDefaults({
+      properties: {
+        keywords: 'metatags, meta, tags, thiagofesta'
+      }
+    });
+    tfMetaTagsProvider.setTitleSuffix(' | MetaTags');
 
     $stateProvider.state('app', {
       'abstract': true,
@@ -32,18 +49,6 @@ angular.module('tfApp', ['ui.router', 'tf.metatags'])
       }
     });
     $urlRouterProvider.otherwise("/");
+  }
 
-  }])
-  .run(['tfMetaTags', function (tfMetaTags) {
-
-    tfMetaTags.setDefaults({
-      properties: {
-        keywords: 'metatags, meta, tags, thiagofesta'
-      }
-    });
-
-    tfMetaTags.setTitleSuffix(' | MetaTags');
-
-    tfMetaTags.init();
-
-  }]);
+})();

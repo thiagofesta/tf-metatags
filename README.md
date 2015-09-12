@@ -1,4 +1,4 @@
-# MetaTags
+# tfMetaTags
 
 [ ![Codeship Status for thiagofesta/tf-metatags](https://img.shields.io/codeship/af075410-1dd6-0133-13c3-0a18ce4642f2.svg)](https://codeship.com/projects/95120) [![Build Status TravisCI](https://img.shields.io/travis/thiagofesta/tf-metatags.svg)](https://travis-ci.org/thiagofesta/tf-metatags) [![codecov.io](https://img.shields.io/codecov/c/github/thiagofesta/tf-metatags.svg)](http://codecov.io/github/thiagofesta/tf-metatags?branch=master) [![coveralls.io](https://img.shields.io/coveralls/thiagofesta/tf-metatags/master.svg)](https://coveralls.io/github/thiagofesta/tf-metatags) [![bower.io](https://img.shields.io/bower/v/tf-metatags.svg)](http://bower.io/search/?q=tf-metatags)  [![npm](https://img.shields.io/npm/v/tf-metatags.svg)](https://www.npmjs.com/package/tf-metatags)
 [![Code Climate](https://img.shields.io/codeclimate/github/thiagofesta/tf-metatags.svg)](https://codeclimate.com/github/thiagofesta/tf-metatags)
@@ -21,7 +21,7 @@ Include it in your module declaration
 angular.module('myApp', ['ui.router', 'tf.metatags']);
 ```
 
-Add the MetaTags service to your page
+Add the tfMetaTags service to your page
 
 ```html
 <title ng-bind="tfMetaTags.title"></title>
@@ -33,19 +33,17 @@ Then configure defaults
 ```javascript
 angular
   .module('myApp')
-  .run(['tfMetaTags', function (tfMetaTags) {
+  .config(['tfMetaTagsProvider', function (tfMetaTagsProvider) {
 
-    tfMetaTags.setDefaults({
+    tfMetaTagsProvider.setDefaults({
       title: 'Default Title',
       properties: {
         keywords: 'keyword1, keyword2'
       }
     });
 
-    tfMetaTags.setTitleSuffix(' | MetaTags');
-    tfMetaTags.setTitlePrefix('Prefix ');
-
-    tfMetaTags.init();
+    tfMetaTagsProvider.setTitleSuffix(' | MetaTags');
+    tfMetaTagsProvider.setTitlePrefix('Prefix ');
 
   }]);
 ```
@@ -53,19 +51,25 @@ angular
 And finally decorate the routes with tfMetaTags:
 
 ```javascript
-$stateProvider
-  .state('home', {
-    url: '/',
-    tfMetaTags: {
-      title: 'Home',
-      properties: {
-        description: 'This is the homepage',
-        keywords: 'keyword1, keyword2',
-        'og:title': 'Home',
-        'twitter:title': 'Home'
-      }
-    }
-  });
+angular
+  .module('myApp')
+  .config(['$stateProvider', function ($stateProvider) {
+
+    $stateProvider
+      .state('home', {
+        url: '/',
+        tfMetaTags: {
+          title: 'Home',
+          properties: {
+            description: 'This is the homepage',
+            keywords: 'keyword1, keyword2',
+            'og:title': 'Home',
+            'twitter:title': 'Home'
+          }
+        }
+      });
+
+  }]);
 ```
 
 ## SEO concerns
@@ -94,7 +98,7 @@ Now you are able to have the server up and running. Go and start the server
 
 ### Running tests
 
-We have JSHint, Unit tests and E2E tests.
+We have JSHint, JSCS, Unit tests and E2E tests.
 
 All of them can be run once using the following command
 
@@ -108,6 +112,13 @@ You can see the coverage on the command line output or more details opening the 
 For running JSHint
 
     grunt test:jshint
+
+
+##### Running JSCS
+
+For running JSCS
+
+    grunt test:jscs
 
 
 ##### Running Unit Tests
@@ -130,4 +141,4 @@ For create a build run
 
     grunt build
 
-This task will also make sure all tests are passing before making the build.
+This task will also make sure all tests are passing before making the build, once build is completed it also perform tests against the generated code.
