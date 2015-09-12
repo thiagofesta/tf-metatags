@@ -1,4 +1,5 @@
 describe('Testing Provider/Service: tfMetaTags', function() {
+  'use strict';
 
   var tfMetaTags,
     $rootScope,

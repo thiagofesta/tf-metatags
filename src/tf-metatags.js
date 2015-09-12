@@ -58,7 +58,7 @@
       callbacks[callbackName] = callbackFn;
     }
     function getCallback(callbackName) {
-      if(callbackName) {
+      if (callbackName) {
         return callbacks[callbackName];
       }
 
@@ -68,13 +68,13 @@
     function mergeDefaults(metaTagsObj) {
       var properties;
 
-      if(defaults.properties) {
+      if (defaults.properties) {
         properties = angular.extend({}, defaults.properties, metaTagsObj.properties);
       }
 
       metaTagsObj = angular.extend({}, defaults, metaTagsObj);
 
-      if(properties) {
+      if (properties) {
         metaTagsObj.properties = properties;
       }
 
@@ -84,7 +84,7 @@
     function updateTitle(metaTagsObj) {
       var title = titlePrefix + (metaTagsObj.title || '') + titleSuffix;
 
-      if(title) {
+      if (title) {
         metaTagsObj.title = title;
       }
 
@@ -100,7 +100,7 @@
       /////////////////////
 
       function update() {
-        if(typeof callbacks.beforeChange === 'function') {
+        if (typeof callbacks.beforeChange === 'function') {
           callbacks.beforeChange();
         }
 
@@ -110,7 +110,7 @@
         self.current = metaTagsObj;
         $rootScope.tfMetaTags = self.current;
 
-        if(typeof callbacks.afterChange === 'function') {
+        if (typeof callbacks.afterChange === 'function') {
           callbacks.afterChange();
         }
       }

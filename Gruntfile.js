@@ -50,15 +50,29 @@ module.exports = function(grunt) {
 
       ],
       unit: {
-        options: {
-          jshintrc: 'test/.jshintrc'
-        },
         src: ['test/unit/{,*/}*.js']
       },
       e2e: {
-        options: {
-          jshintrc: 'test/.jshintrc'
-        },
+        src: ['test/e2e/{,*/}*.js']
+      }
+    },
+
+    jscs: {
+      options: {
+        config: '.jscsrc',
+        reporter: require('jscs-stylish').path
+      },
+      metatags: [
+        'Gruntfile.js',
+        'src/*.js'
+      ],
+      sample: [
+
+      ],
+      unit: {
+        src: ['test/unit/{,*/}*.js']
+      },
+      e2e: {
         src: ['test/e2e/{,*/}*.js']
       }
     },
@@ -72,7 +86,7 @@ module.exports = function(grunt) {
 
     protractor: {
       options: {
-        configFile: "test/protractor.conf.js",
+        configFile: 'test/protractor.conf.js',
         noColor: false
       },
       e2e: {
@@ -130,12 +144,17 @@ module.exports = function(grunt) {
   grunt.registerTask('test', [
     'connect:test',
     'jshint',
+    'jscs',
     'karma',
     'protractor:e2e'
   ]);
 
   grunt.registerTask('test:jshint', [
     'jshint'
+  ]);
+
+  grunt.registerTask('test:jscs', [
+    'jscs'
   ]);
 
   grunt.registerTask('test:unit', [
