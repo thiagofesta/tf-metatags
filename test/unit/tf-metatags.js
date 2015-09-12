@@ -1,4 +1,4 @@
-describe('Testing Service: tfMetaTags', function() {
+describe('Testing Provider/Service: tfMetaTags', function() {
 
   var tfMetaTags,
     $rootScope,
@@ -176,11 +176,11 @@ describe('Testing Service: tfMetaTags', function() {
 
   });
 
-  it('should have an init method which listen for $stateChangeSuccess on the $rootScope', function() {
-    expect(tfMetaTags.init).toBeDefined();
-    expect(tfMetaTags.init).toEqual(jasmine.any(Function));
+  it('should have an initialize method which listen for $stateChangeSuccess on the $rootScope', function() {
+    expect(tfMetaTags.initialize).toBeDefined();
+    expect(tfMetaTags.initialize).toEqual(jasmine.any(Function));
 
-    tfMetaTags.init();
+    tfMetaTags.initialize();
 
     expect($rootScope.$on).toHaveBeenCalledWith('$stateChangeSuccess', tfMetaTags.update);
   });
