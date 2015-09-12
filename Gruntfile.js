@@ -78,8 +78,12 @@ module.exports = function(grunt) {
     },
 
     karma: {
-      unit: {
+      src: {
         configFile: 'test/karma.conf.js',
+        singleRun: true
+      },
+      build: {
+        configFile: 'test/karma-build.conf.js',
         singleRun: true
       }
     },
@@ -134,7 +138,8 @@ module.exports = function(grunt) {
     'test',
     'ngAnnotate:src',
     'concat:build',
-    'uglify:build'
+    'uglify:build',
+    'karma:build'
   ]);
 
   grunt.registerTask('server', [
@@ -145,7 +150,7 @@ module.exports = function(grunt) {
     'connect:test',
     'jshint',
     'jscs',
-    'karma',
+    'karma:src',
     'protractor:e2e'
   ]);
 
@@ -158,7 +163,7 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('test:unit', [
-    'karma'
+    'karma:src'
   ]);
 
   grunt.registerTask('test:e2e', [

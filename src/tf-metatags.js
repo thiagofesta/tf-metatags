@@ -122,6 +122,7 @@
       // Expose to Service same methods that the Provider have
       return self;
     }
+    tfMetaTags.$inject = ['$rootScope', '$state'];
 
   }
 
@@ -129,5 +130,6 @@
   function runBlock(tfMetaTags) {
     tfMetaTags.initialize();
   }
+  runBlock.$inject = ['tfMetaTags'];
 
 })();
