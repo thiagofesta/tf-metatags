@@ -1,3 +1,9 @@
+Version 0.4.1:
+ - Added version 0.4.1 to bower and package
+ - Merge pull request #4 from thiagofesta/development
+ - Fixed issue with the build taks, it was ngAnnotating the src files intead of the released files
+ - Added new features: * now you are able to use functions; * now you are able to use falsy values to remove them from tfMetaTags object.
+
 Version 0.4.0:
  - Releasing
  - Merge pull request #3 from thiagofesta/development
