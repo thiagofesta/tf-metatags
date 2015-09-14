@@ -53,7 +53,9 @@ And finally decorate the routes with tfMetaTags:
 ```javascript
 angular
   .module('myApp')
-  .config(['$stateProvider', function ($stateProvider) {
+  .config(['$stateProvider', function ($stateProvider, $windowProvider) {
+
+    var $window = $windowProvider.$get();
 
     $stateProvider
       .state('home', {
@@ -64,6 +66,9 @@ angular
             description: 'This is the homepage',
             keywords: 'keyword1, keyword2',
             'og:title': 'Home',
+            'og:url': function() {
+              return $window.location.href;
+            },
             'twitter:title': 'Home'
           }
         }

@@ -9,8 +9,12 @@ describe('Testing tf-metatags', function() {
     it('should render meta tags correctly', function() {
 
       element.all(by.css('head meta')).then(function(items) {
-        expect(items.length).toBe(1);
+        expect(items.length).toBe(2);
       });
+
+      var ogUrl = element(by.css('head meta[name="og:url"]'));
+      expect(ogUrl.getAttribute('name')).toBe('og:url');
+      expect(ogUrl.getAttribute('content')).toBe('http://0.0.0.0:3000/sample/index.html#/');
 
       var keywords = element(by.css('head meta[name=keywords]'));
       expect(keywords.getAttribute('name')).toBe('keywords');
@@ -26,8 +30,12 @@ describe('Testing tf-metatags', function() {
     it('should render meta tags correctly', function() {
 
       element.all(by.css('head meta')).then(function(items) {
-        expect(items.length).toBe(2);
+        expect(items.length).toBe(3);
       });
+
+      var ogUrl = element(by.css('head meta[name="og:url"]'));
+      expect(ogUrl.getAttribute('name')).toBe('og:url');
+      expect(ogUrl.getAttribute('content')).toBe('http://0.0.0.0:3000/sample/index.html#/view1/');
 
       var keywords = element(by.css('head meta[name=keywords]'));
       expect(keywords.getAttribute('name')).toBe('keywords');
@@ -47,8 +55,12 @@ describe('Testing tf-metatags', function() {
     it('should render meta tags correctly', function() {
 
       element.all(by.css('head meta')).then(function(items) {
-        expect(items.length).toBe(2);
+        expect(items.length).toBe(3);
       });
+
+      var ogImage = element(by.css('head meta[name="og:image"]'));
+      expect(ogImage.getAttribute('name')).toBe('og:image');
+      expect(ogImage.getAttribute('content')).toBe('http://someurl.com/image.jpg');
 
       var keywords = element(by.css('head meta[name=keywords]'));
       expect(keywords.getAttribute('name')).toBe('keywords');

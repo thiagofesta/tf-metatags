@@ -3,24 +3,22 @@ describe('Testing Provider/Service: tfMetaTags', function() {
 
   var tfMetaTags,
     $rootScope,
-    $state;
+    $state,
+    $timeout;
 
   beforeEach(module('tf.metatags'));
 
   beforeEach(function() {
     module('tf.metatags', function ($provide) {
-      $provide.value('$rootScope', {
-        $on: jasmine.createSpy()
-      });
-
       $provide.value('$state', {
         current: {}
       });
     });
-    inject(function (_tfMetaTags_, _$rootScope_, _$state_) {
+    inject(function (_tfMetaTags_, _$rootScope_, _$state_, _$timeout_) {
       tfMetaTags = _tfMetaTags_;
       $rootScope = _$rootScope_;
       $state = _$state_;
+      $timeout = _$timeout_;
     });
   });
 
@@ -175,15 +173,71 @@ describe('Testing Provider/Service: tfMetaTags', function() {
       expect(tfMetaTags.current).toEqual($state.current.tfMetaTags);
     });
 
+    it('when setDefaults has empty values and functions', function() {
+      tfMetaTags.setDefaults({
+        title: function() {
+          return 'Title';
+        },
+        properties: {
+          description: 'Desc',
+          keywords: 'Meta, tags, home',
+          'og:url': function() {
+            return 'http://someurl.com/test';
+          },
+          'og:image': 'http://someurl.com/image.jpg',
+          'og:image:width': 300,
+          'og:image:height': 300
+        }
+      });
+
+      $state.current = {
+        tfMetaTags: {
+          title: 'Homepage',
+          properties: {
+            'og:image:width': undefined,
+            'og:image:height': ''
+          }
+        }
+      };
+
+      tfMetaTags.update();
+
+      // It runs the fns, and remove falsy values
+      expect(tfMetaTags.current).toEqual({
+        title: 'Homepage',
+        properties: {
+          description: 'Desc',
+          keywords: 'Meta, tags, home',
+          'og:url': 'http://someurl.com/test',
+          'og:image': 'http://someurl.com/image.jpg'
+        }
+      });
+    });
+
   });
 
   it('should have an initialize method which listen for $stateChangeSuccess on the $rootScope', function() {
+    spyOn($rootScope, '$on');
+
     expect(tfMetaTags.initialize).toBeDefined();
     expect(tfMetaTags.initialize).toEqual(jasmine.any(Function));
 
     tfMetaTags.initialize();
 
-    expect($rootScope.$on).toHaveBeenCalledWith('$stateChangeSuccess', tfMetaTags.update);
+    expect($rootScope.$on).toHaveBeenCalledWith('$stateChangeSuccess', jasmine.any(Function));
+  });
+
+  it('when receiveing $stateChangeSuccess on the $rootScope, should update', function() {
+    spyOn(tfMetaTags, 'update');
+
+    tfMetaTags.initialize();
+
+    expect(tfMetaTags.update).not.toHaveBeenCalled();
+
+    $rootScope.$broadcast('$stateChangeSuccess');
+    $timeout.flush();
+
+    expect(tfMetaTags.update).toHaveBeenCalledWith();
   });
 
   it('when calling update method it should register tfMetaTags.current on the $rootScope.tfMetaTags', function() {

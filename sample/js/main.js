@@ -9,11 +9,16 @@
     .config(tfAppConfig);
 
   /* @ngInject */
-  function tfAppConfig($stateProvider, $urlRouterProvider, tfMetaTagsProvider) {
+  function tfAppConfig($stateProvider, $urlRouterProvider, tfMetaTagsProvider, $windowProvider) {
+
+    var $window = $windowProvider.$get();
 
     tfMetaTagsProvider.setDefaults({
       properties: {
-        keywords: 'metatags, meta, tags, thiagofesta'
+        keywords: 'metatags, meta, tags, thiagofesta',
+        'og:url': function() {
+          return $window.location.href;
+        }
       }
     });
     tfMetaTagsProvider.setTitleSuffix(' | MetaTags');
@@ -44,7 +49,11 @@
       tfMetaTags: {
         title: 'View 2',
         properties: {
-          description: 'This is the view 2'
+          description: 'This is the view 2',
+          'og:url': null,
+          'og:image': function() {
+            return 'http://someurl.com/image.jpg';
+          }
         }
       }
     });
