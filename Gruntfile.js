@@ -106,7 +106,7 @@ module.exports = function(grunt) {
       },
       build: {
         files: {
-          'release/tf-metatags.min.js': ['src/tf-metatags.js']
+          'release/tf-metatags.min.js': ['release/tf-metatags.js']
         }
       }
     },
@@ -116,7 +116,7 @@ module.exports = function(grunt) {
         banner: '<%= meta.banner %>'
       },
       build: {
-        src: ['src/tf-metatags.js'],
+        src: ['release/tf-metatags.js'],
         dest: 'release/tf-metatags.js'
       }
     },
@@ -127,7 +127,7 @@ module.exports = function(grunt) {
       },
       src: {
         files: {
-          'src/tf-metatags.js': ['src/tf-metatags.js']
+          'release/tf-metatags.js': ['src/tf-metatags.js']
         }
       }
     }
