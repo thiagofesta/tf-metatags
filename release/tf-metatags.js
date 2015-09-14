@@ -1,6 +1,6 @@
 /**
  * Angular module for providing MetaTags support based on routes.
- * @version v0.4.0-dev-2015-09-12
+ * @version v0.4.0-dev-2015-09-14
  * @link https://github.com/thiagofesta/tf-metatags
  * @author Thiago Festa <thiagofesta@gmail.com> (http://thiagofesta.com)
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -94,12 +94,36 @@
       if (title) {
         metaTagsObj.title = title;
       }
+    }
 
-      return metaTagsObj;
+    function removeFalsyValues(metaTagsObj) {
+      cleanup(metaTagsObj);
+      cleanup(metaTagsObj.properties);
+
+      function cleanup(obj) {
+        angular.forEach(obj, function(value, key) {
+          if (!value) {
+            delete obj[key];
+          }
+        });
+      }
+    }
+
+    function executeFunctions(metaTagsObj) {
+      execute(metaTagsObj);
+      execute(metaTagsObj.properties);
+
+      function execute(obj) {
+        angular.forEach(obj, function(value, key) {
+          if (angular.isFunction(value)) {
+            obj[key] = value();
+          }
+        });
+      }
     }
 
     /* @ngInject */
-    function tfMetaTags($rootScope, $state) {
+    function tfMetaTags($rootScope, $state, $timeout) {
 
       self.update = update;
       self.initialize = initialize;
@@ -112,7 +136,9 @@
         }
 
         var metaTagsObj = mergeDefaults($state.current.tfMetaTags || {});
-        metaTagsObj = updateTitle(metaTagsObj);
+        removeFalsyValues(metaTagsObj);
+        executeFunctions(metaTagsObj);
+        updateTitle(metaTagsObj);
 
         self.current = metaTagsObj;
         $rootScope.tfMetaTags = self.current;
@@ -123,13 +149,17 @@
       }
 
       function initialize() {
-        $rootScope.$on('$stateChangeSuccess', self.update);
+        $rootScope.$on('$stateChangeSuccess', onStateChangeSuccess);
+
+        function onStateChangeSuccess() {
+          $timeout(self.update);
+        }
       }
 
       // Expose to Service same methods that the Provider have
       return self;
     }
-    tfMetaTags.$inject = ['$rootScope', '$state'];
+    tfMetaTags.$inject = ['$rootScope', '$state', '$timeout'];
 
   }
 
