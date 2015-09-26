@@ -1,3 +1,10 @@
+Version 0.4.2:
+ - Added version 0.4.2 to bower and package; Generated new release files
+ - Merge pull request #5 from thiagofesta/development
+ - Added built files
+ - Added docs
+ - Added interpolation and invoke, able to use resolve responses
+
 Version 0.4.1:
  - Added version 0.4.1 to bower and package
  - Merge pull request #4 from thiagofesta/development
