@@ -1,6 +1,6 @@
 /**
  * Angular module for providing MetaTags support based on routes.
- * @version v0.4.1-dev-2015-09-26
+ * @version v0.4.2-dev-2015-09-26
  * @link https://github.com/thiagofesta/tf-metatags
  * @author Thiago Festa <thiagofesta@gmail.com> (http://thiagofesta.com)
  * @license MIT License, http://www.opensource.org/licenses/MIT
