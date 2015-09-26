@@ -72,6 +72,34 @@ angular
             'twitter:title': 'Home'
           }
         }
+      })
+      .state('movie', {
+        url: '/movie',
+        resolve: {
+          /* @ngInject */
+          movieData: function($q, $timeout) {
+            var deferred = $q.defer();
+  
+            $timeout(function() {
+              deferred.resolve({
+                title: 'The Lord of the Rings: The Fellowship of the Ring',
+                year: 2001,
+                summary: 'A meek hobbit of the Shire and eight companions set out on a journey to Mount Doom to destroy the One Ring and the dark lord Sauron.'
+              });
+            }, 1000);
+  
+            return deferred.promise;
+          }
+        },
+        tfMetaTags: {
+          /* @ngInject */
+          title: function(movieData) {
+            return movieData.title;
+          },
+          properties: {
+            description: 'Summary: {{movieData.summary}}; Year: {{movieData.year}}'
+          }
+        }
       });
 
   }]);
