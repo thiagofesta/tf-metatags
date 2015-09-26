@@ -36,10 +36,29 @@
     }).state('app.view1', {
       url: '/view1/',
       templateUrl: 'views/view1.html',
+      resolve: {
+        /* @ngInject */
+        movieData: function($q, $timeout) {
+          var deferred = $q.defer();
+
+          $timeout(function() {
+            deferred.resolve({
+              title: 'The Lord of the Rings: The Fellowship of the Ring',
+              year: 2001,
+              summary: 'A meek hobbit of the Shire and eight companions set out on a journey to Mount Doom to destroy the One Ring and the dark lord Sauron.'
+            });
+          }, 1000);
+
+          return deferred.promise;
+        }
+      },
       tfMetaTags: {
-        title: 'View 1',
+        /* @ngInject */
+        title: function(movieData) {
+          return movieData.title;
+        },
         properties: {
-          description: 'This is the view 1',
+          description: 'Summary: {{movieData.summary}}; Year: {{movieData.year}}',
           keywords: 'override, the, descriptions'
         }
       }

@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('tf.metatags', [])
+    .module('tf.metatags', ['ui.router'])
     .provider('tfMetaTags', tfMetaTagsProvider)
     .run(runBlock);
 
@@ -26,8 +26,6 @@
 
     self.addCallback = addCallback;
     self.getCallback = getCallback;
-
-    self.current = {};
 
     self.$get = tfMetaTags;
 
@@ -65,63 +63,85 @@
       return callbacks;
     }
 
-    function mergeDefaults(metaTagsObj) {
-      var properties;
-
-      if (defaults.properties) {
-        properties = angular.extend({}, defaults.properties, metaTagsObj.properties);
-      }
-
-      metaTagsObj = angular.extend({}, defaults, metaTagsObj);
-
-      if (properties) {
-        metaTagsObj.properties = properties;
-      }
-
-      return metaTagsObj;
-    }
-
-    function updateTitle(metaTagsObj) {
-      var title = titlePrefix + (metaTagsObj.title || '') + titleSuffix;
-
-      if (title) {
-        metaTagsObj.title = title;
-      }
-    }
-
-    function removeFalsyValues(metaTagsObj) {
-      cleanup(metaTagsObj);
-      cleanup(metaTagsObj.properties);
-
-      function cleanup(obj) {
-        angular.forEach(obj, function(value, key) {
-          if (!value) {
-            delete obj[key];
-          }
-        });
-      }
-    }
-
-    function executeFunctions(metaTagsObj) {
-      execute(metaTagsObj);
-      execute(metaTagsObj.properties);
-
-      function execute(obj) {
-        angular.forEach(obj, function(value, key) {
-          if (angular.isFunction(value)) {
-            obj[key] = value();
-          }
-        });
-      }
-    }
-
     /* @ngInject */
-    function tfMetaTags($rootScope, $state, $timeout) {
+    function tfMetaTags($rootScope, $state, $timeout, $interpolate) {
 
+      self.current = {};
       self.update = update;
       self.initialize = initialize;
 
       /////////////////////
+
+      function initialize() {
+        $rootScope.$on('$stateChangeSuccess', onStateChangeSuccess);
+
+        function onStateChangeSuccess() {
+          $timeout(self.update);
+        }
+      }
+
+      function mergeDefaults(metaTagsObj) {
+        var properties;
+
+        if (defaults.properties) {
+          properties = angular.extend({}, defaults.properties, metaTagsObj.properties);
+        }
+
+        metaTagsObj = angular.extend({}, defaults, metaTagsObj);
+
+        if (properties) {
+          metaTagsObj.properties = properties;
+        }
+
+        return metaTagsObj;
+      }
+
+      function updateTitle(metaTagsObj) {
+        var title = titlePrefix + (metaTagsObj.title || '') + titleSuffix;
+
+        if (title) {
+          metaTagsObj.title = title;
+        }
+      }
+
+      function removeFalsyValues(metaTagsObj) {
+        cleanup(metaTagsObj);
+        cleanup(metaTagsObj.properties);
+
+        function cleanup(obj) {
+          angular.forEach(obj, function(value, key) {
+            if (!value) {
+              delete obj[key];
+            }
+          });
+        }
+      }
+
+      function executeFunctions(metaTagsObj) {
+        execute(metaTagsObj);
+        execute(metaTagsObj.properties);
+
+        function execute(obj) {
+          angular.forEach(obj, function(value, key) {
+            if (!angular.isObject(value)) {
+              obj[key] = getValue(value);
+            }
+          });
+        }
+      }
+
+      function getValue(value) {
+        var ret,
+          $injector = angular.injector();
+
+        if (angular.isFunction(value)) {
+          ret = $injector.invoke(value, self, $state.$current.locals.globals);
+        } else {
+          ret = $interpolate(value)($state.$current.locals.globals);
+        }
+
+        return ret;
+      }
 
       function update() {
         if (typeof callbacks.beforeChange === 'function') {
@@ -138,14 +158,6 @@
 
         if (typeof callbacks.afterChange === 'function') {
           callbacks.afterChange();
-        }
-      }
-
-      function initialize() {
-        $rootScope.$on('$stateChangeSuccess', onStateChangeSuccess);
-
-        function onStateChangeSuccess() {
-          $timeout(self.update);
         }
       }
 
