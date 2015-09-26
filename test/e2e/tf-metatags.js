@@ -24,7 +24,7 @@ describe('Testing tf-metatags', function() {
 
   var testView1 = function() {
     it('the page title should be correct', function() {
-      expect(browser.getTitle()).toEqual('View 1 | MetaTags');
+      expect(browser.getTitle()).toEqual('The Lord of the Rings: The Fellowship of the Ring | MetaTags');
     });
 
     it('should render meta tags correctly', function() {
@@ -43,7 +43,8 @@ describe('Testing tf-metatags', function() {
 
       var description = element(by.css('head meta[name=description]'));
       expect(description.getAttribute('name')).toBe('description');
-      expect(description.getAttribute('content')).toBe('This is the view 1');
+      expect(description.getAttribute('content')).toBe('Summary: A meek hobbit of the Shire and eight companions ' +
+      'set out on a journey to Mount Doom to destroy the One Ring and the dark lord Sauron.; Year: 2001');
     });
   };
 
