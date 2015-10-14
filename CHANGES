@@ -1,3 +1,7 @@
+Version 0.4.3:
+ - Merge pull request #6 from thiagofesta/development
+ - Fix injector
+
 Version 0.4.2:
  - Added version 0.4.2 to bower and package; Generated new release files
  - Merge pull request #5 from thiagofesta/development

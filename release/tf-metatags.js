@@ -1,6 +1,6 @@
 /**
  * Angular module for providing MetaTags support based on routes.
- * @version v0.4.2-dev-2015-09-26
+ * @version v0.4.3-dev-2015-10-14
  * @link https://github.com/thiagofesta/tf-metatags
  * @author Thiago Festa <thiagofesta@gmail.com> (http://thiagofesta.com)
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -71,7 +71,7 @@
     }
 
     /* @ngInject */
-    function tfMetaTags($rootScope, $state, $timeout, $interpolate) {
+    function tfMetaTags($rootScope, $state, $timeout, $interpolate, $injector) {
 
       self.current = {};
       self.update = update;
@@ -138,8 +138,7 @@
       }
 
       function getValue(value) {
-        var ret,
-          $injector = angular.injector();
+        var ret;
 
         if (angular.isFunction(value)) {
           ret = $injector.invoke(value, self, $state.$current.locals.globals);
@@ -171,7 +170,7 @@
       // Expose to Service same methods that the Provider have
       return self;
     }
-    tfMetaTags.$inject = ['$rootScope', '$state', '$timeout', '$interpolate'];
+    tfMetaTags.$inject = ['$rootScope', '$state', '$timeout', '$interpolate', '$injector'];
 
   }
 

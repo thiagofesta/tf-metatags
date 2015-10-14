@@ -1,6 +1,6 @@
 {
   "name": "tf-metatags",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "homepage": "https://github.com/thiagofesta/tf-metatags",
   "description": "Angular module for providing MetaTags support based on routes.",
   "keywords": [
