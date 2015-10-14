@@ -64,7 +64,7 @@
     }
 
     /* @ngInject */
-    function tfMetaTags($rootScope, $state, $timeout, $interpolate) {
+    function tfMetaTags($rootScope, $state, $timeout, $interpolate, $injector) {
 
       self.current = {};
       self.update = update;
@@ -131,8 +131,7 @@
       }
 
       function getValue(value) {
-        var ret,
-          $injector = angular.injector();
+        var ret;
 
         if (angular.isFunction(value)) {
           ret = $injector.invoke(value, self, $state.$current.locals.globals);
