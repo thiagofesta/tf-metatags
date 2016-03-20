@@ -1,3 +1,10 @@
+Version 0.4.4:
+ - Merge pull request #8 from thiagofesta/development
+ - new phantomjs version and correct angular mocks
+ - Updated travis
+ - Use specific package versions
+ - Allow integers
+
 Version 0.4.3:
  - Merge pull request #6 from thiagofesta/development
  - Fix injector
