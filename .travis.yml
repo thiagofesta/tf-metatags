@@ -3,7 +3,6 @@ node_js:
   - "0.12.7"
 
 before_script:
-  - npm -g install npm@latest-2
   - npm install -g grunt-cli
 
 script:
