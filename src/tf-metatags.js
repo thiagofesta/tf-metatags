@@ -135,8 +135,10 @@
 
         if (angular.isFunction(value)) {
           ret = $injector.invoke(value, self, $state.$current.locals.globals);
-        } else {
+        } else if (angular.isString(value)) {
           ret = $interpolate(value)($state.$current.locals.globals);
+        } else {
+          ret = value;
         }
 
         return ret;
