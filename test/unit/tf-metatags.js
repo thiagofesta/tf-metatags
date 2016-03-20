@@ -123,7 +123,8 @@ describe('Testing Provider/Service: tfMetaTags', function() {
           tfMetaTags: {
             title: 'Homepage',
             properties: {
-              description: 'Description of homepage'
+              description: 'Description of homepage',
+              number: 123
             }
           }
         };
@@ -142,7 +143,8 @@ describe('Testing Provider/Service: tfMetaTags', function() {
           title: 'Homepage',
           properties: {
             description: 'Description of homepage',
-            keywords: 'Meta, tags, home'
+            keywords: 'Meta, tags, home',
+            number: 123
           }
         });
       });
