@@ -1,6 +1,6 @@
 /**
  * Angular module for providing MetaTags support based on routes.
- * @version v0.4.3-dev-2015-10-14
+ * @version v0.4.4-dev-2016-03-20
  * @link https://github.com/thiagofesta/tf-metatags
  * @author Thiago Festa <thiagofesta@gmail.com> (http://thiagofesta.com)
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -142,8 +142,10 @@
 
         if (angular.isFunction(value)) {
           ret = $injector.invoke(value, self, $state.$current.locals.globals);
-        } else {
+        } else if (angular.isString(value)) {
           ret = $interpolate(value)($state.$current.locals.globals);
+        } else {
+          ret = value;
         }
 
         return ret;
