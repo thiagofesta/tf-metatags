@@ -1,3 +1,8 @@
+Version 1.0.1:
+ - Merge pull request #10 from thiagofesta/development
+ - Updated phantomjs to latest
+ - Added support to webpack
+
 Version 1.0.0:
 
 
