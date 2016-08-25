@@ -1,6 +1,6 @@
 {
   "name": "tf-metatags",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "homepage": "https://github.com/thiagofesta/tf-metatags",
   "description": "Angular module for providing MetaTags support based on routes.",
   "keywords": [
@@ -31,7 +31,6 @@
     "grunt-karma": "0.12.0",
     "grunt-ng-annotate": "1.0.1",
     "grunt-protractor-runner": "2.0.0",
-    "husky": "0.10.1",
     "jasmine-core": "2.3.4",
     "jscs-stylish": "0.3.1",
     "jshint-stylish": "2.0.1",
@@ -41,12 +40,12 @@
     "karma-ng-html2js-preprocessor": "0.1.2",
     "karma-phantomjs-launcher": "1.0.0",
     "load-grunt-tasks": "3.2.0",
-    "phantomjs": "2.1.3",
+    "phantomjs": "2.1.7",
     "protractor": "2.1.0",
     "time-grunt": "1.2.1"
   },
+  "main": "release/tf-metatags.js",
   "scripts": {
-    "postinstall": "./node_modules/bower/bin/bower install && ./node_modules/protractor/bin/webdriver-manager update",
     "precommit": "grunt test"
   }
 }

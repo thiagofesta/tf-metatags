@@ -123,6 +123,7 @@ You can read more for the topic on the following articles:
 First you need to install the dependencies
 
     npm install
+    ./node_modules/bower/bin/bower install && ./node_modules/protractor/bin/webdriver-manager update
 
 Now you are able to have the server up and running. Go and start the server
 
