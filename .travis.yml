@@ -4,6 +4,8 @@ node_js:
 
 before_script:
   - npm install -g grunt-cli
+  - ./node_modules/bower/bin/bower install
+  - ./node_modules/protractor/bin/webdriver-manager update
 
 script:
   - grunt test:jshint
