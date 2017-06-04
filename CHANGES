@@ -1,3 +1,8 @@
+Version 2.0.0:
+ - Merge pull request #14 from thiagofesta/development
+ - Update node to 7.5.0
+ - Added support for ui-router 1.0.0
+
 Version 1.0.1:
  - Merge pull request #10 from thiagofesta/development
  - Updated phantomjs to latest
