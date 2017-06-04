@@ -1,6 +1,6 @@
 /**
  * Angular module for providing MetaTags support based on routes.
- * @version v1.0.1-dev-2016-08-24
+ * @version v2.0.0-dev-2017-06-04
  * @link https://github.com/thiagofesta/tf-metatags
  * @author Thiago Festa <thiagofesta@gmail.com> (http://thiagofesta.com)
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -17,7 +17,7 @@
   /* @ngInject */
   function tfMetaTagsProvider() {
     /* jshint validthis:true */
-    tfMetaTags.$inject = ['$rootScope', '$state', '$timeout', '$interpolate', '$injector'];
+    tfMetaTags.$inject = ['$rootScope', '$transitions', '$state', '$q', '$timeout', '$interpolate', '$injector'];
     var self = this,
       defaults = {},
       titlePrefix = '',
@@ -73,19 +73,31 @@
     }
 
     /* @ngInject */
-    function tfMetaTags($rootScope, $state, $timeout, $interpolate, $injector) {
+    function tfMetaTags($rootScope, $transitions, $state, $q, $timeout, $interpolate, $injector) {
 
       self.current = {};
+      self.resolved = {};
       self.update = update;
       self.initialize = initialize;
 
       /////////////////////
 
       function initialize() {
-        $rootScope.$on('$stateChangeSuccess', onStateChangeSuccess);
+        $transitions.onSuccess({to: '**'}, onStateChangeSuccess);
 
-        function onStateChangeSuccess() {
-          $timeout(self.update);
+        function onStateChangeSuccess(transition) {
+          var tokens = transition.getResolveTokens();
+          var resolves = {};
+          var promises = tokens.map(function(token) {
+            var resolved = transition.injector().get(token);
+            resolves[token] = resolved;
+            return resolved;
+          });
+
+          $q.all(promises).then(function() {
+            self.resolved = resolves;
+            $timeout(self.update);
+          });
         }
       }
 
@@ -143,9 +155,9 @@
         var ret;
 
         if (angular.isFunction(value)) {
-          ret = $injector.invoke(value, self, $state.$current.locals.globals);
+          ret = $injector.invoke(value, self, self.resolved);
         } else if (angular.isString(value)) {
-          ret = $interpolate(value)($state.$current.locals.globals);
+          ret = $interpolate(value)(self.resolved);
         } else {
           ret = value;
         }

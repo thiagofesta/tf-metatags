@@ -14,7 +14,7 @@ describe('Testing tf-metatags', function() {
 
       var ogUrl = element(by.css('head meta[name="og:url"]'));
       expect(ogUrl.getAttribute('name')).toBe('og:url');
-      expect(ogUrl.getAttribute('content')).toBe('http://0.0.0.0:3000/sample/index.html#/');
+      expect(ogUrl.getAttribute('content')).toBe('http://0.0.0.0:3000/sample/index.html#!/');
 
       var keywords = element(by.css('head meta[name=keywords]'));
       expect(keywords.getAttribute('name')).toBe('keywords');
@@ -35,7 +35,7 @@ describe('Testing tf-metatags', function() {
 
       var ogUrl = element(by.css('head meta[name="og:url"]'));
       expect(ogUrl.getAttribute('name')).toBe('og:url');
-      expect(ogUrl.getAttribute('content')).toBe('http://0.0.0.0:3000/sample/index.html#/view1/');
+      expect(ogUrl.getAttribute('content')).toBe('http://0.0.0.0:3000/sample/index.html#!/view1/');
 
       var keywords = element(by.css('head meta[name=keywords]'));
       expect(keywords.getAttribute('name')).toBe('keywords');
@@ -87,7 +87,7 @@ describe('Testing tf-metatags', function() {
     describe('when accessing /view1/', function() {
 
       beforeEach(function() {
-        browser.get('/sample/index.html#/view1/');
+        browser.get('/sample/index.html#!/view1/');
       });
 
       testView1();
@@ -96,7 +96,7 @@ describe('Testing tf-metatags', function() {
     describe('when accessing /view2/', function() {
 
       beforeEach(function() {
-        browser.get('/sample/index.html#/view2/');
+        browser.get('/sample/index.html#!/view2/');
       });
 
       testView2();
