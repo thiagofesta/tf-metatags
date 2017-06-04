@@ -7,6 +7,15 @@ Angular module for providing MetaTags support based on routes.
 
 Inspired from [angular-metatags](https://github.com/AvraamMavridis/angular-metatags) and used some ideas from [ui-router-metatags](https://github.com/tinusn/ui-router-metatags).
 
+## Versions
+
+When using ui-router 1 or higher, use tf-metatags 2 or higher.
+
+| ui-router | tf-metatags |
+| --------- | ----------- |
+| >= 1.0.0  | >= 2.0.0    |
+| <  1.0.0  | <  2.0.0.   |
+
 ## Installation
 
 Download [tf-metatags.min.js](https://raw.githubusercontent.com/thiagofesta/tf-metatags/master/release/tf-metatags.min.js) and include it on your page

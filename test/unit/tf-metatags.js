@@ -79,15 +79,17 @@ describe('Testing Provider/Service: tfMetaTags', function() {
 
     var tfMetaTags,
       $rootScope,
+      $transitions,
       $state,
       $timeout,
       $q;
 
     beforeEach(module('tf.metatags'));
 
-    beforeEach(inject(function (_tfMetaTags_, _$rootScope_, _$state_, _$timeout_, _$q_) {
+    beforeEach(inject(function (_tfMetaTags_, _$rootScope_, _$transitions_, _$state_, _$timeout_, _$q_) {
       tfMetaTags = _tfMetaTags_;
       $rootScope = _$rootScope_;
+      $transitions = _$transitions_;
       $state = _$state_;
       $timeout = _$timeout_;
       $q = _$q_;
@@ -111,7 +113,7 @@ describe('Testing Provider/Service: tfMetaTags', function() {
     describe('should update correctly', function() {
 
       it('when have nothing', function() {
-        $state.current = {};
+        $state.router.globals.current = {};
 
         tfMetaTags.update();
 
@@ -119,7 +121,7 @@ describe('Testing Provider/Service: tfMetaTags', function() {
       });
 
       it('when have only title and description and setDefaults', function() {
-        $state.current = {
+        $state.router.globals.current = {
           tfMetaTags: {
             title: 'Homepage',
             properties: {
@@ -150,7 +152,7 @@ describe('Testing Provider/Service: tfMetaTags', function() {
       });
 
       it('when have only title and description and setTitlePrefix and setTitleSuffix', function() {
-        $state.current = {
+        $state.router.globals.current = {
           tfMetaTags: {
             title: 'Homepage',
             properties: {
@@ -173,7 +175,7 @@ describe('Testing Provider/Service: tfMetaTags', function() {
       });
 
       it('when have nothing and use setTitlePrefix and setTitleSuffix', function() {
-        $state.current = {};
+        $state.router.globals.current = {};
 
         tfMetaTags.setTitlePrefix('Pre ');
         tfMetaTags.setTitleSuffix(' | TF');
@@ -185,7 +187,7 @@ describe('Testing Provider/Service: tfMetaTags', function() {
       });
 
       it('when has title, description and keywords', function() {
-        $state.current = {
+        $state.router.globals.current = {
           tfMetaTags: {
             title: 'Homepage',
             properties: {
@@ -217,7 +219,7 @@ describe('Testing Provider/Service: tfMetaTags', function() {
           }
         });
 
-        $state.current = {
+        $state.router.globals.current = {
           tfMetaTags: {
             title: 'Homepage',
             properties: {
@@ -251,7 +253,7 @@ describe('Testing Provider/Service: tfMetaTags', function() {
           }
         });
 
-        $state.$current.locals.globals = {
+        tfMetaTags.resolved = {
           movieData: {
             title: 'The Lord of the Rings: The Fellowship of the Ring',
             year: 2001,
@@ -262,7 +264,7 @@ describe('Testing Provider/Service: tfMetaTags', function() {
           }
         };
 
-        $state.current = {
+        $state.router.globals.current = {
           tfMetaTags: {
             title: function(movieData) {
               return movieData.title;
@@ -291,25 +293,34 @@ describe('Testing Provider/Service: tfMetaTags', function() {
 
     });
 
-    it('should have an initialize method which listen for $stateChangeSuccess on the $rootScope', function() {
-      spyOn($rootScope, '$on');
+    it('should have an initialize method which listen for $transitions.onSuccess', function() {
+      spyOn($transitions, 'onSuccess');
 
       expect(tfMetaTags.initialize).toBeDefined();
       expect(tfMetaTags.initialize).toEqual(jasmine.any(Function));
 
       tfMetaTags.initialize();
 
-      expect($rootScope.$on).toHaveBeenCalledWith('$stateChangeSuccess', jasmine.any(Function));
+      expect($transitions.onSuccess).toHaveBeenCalledWith({to: '**'}, jasmine.any(Function));
     });
 
-    it('when receiveing $stateChangeSuccess on the $rootScope, should update', function() {
+    it('when receiving $transitions.onSuccess, should update', function() {
       spyOn(tfMetaTags, 'update');
 
       tfMetaTags.initialize();
 
       expect(tfMetaTags.update).not.toHaveBeenCalled();
 
-      $rootScope.$broadcast('$stateChangeSuccess');
+      $transitions.getHooks('onSuccess')[3].callback({
+        injector: function() {
+          return {
+            get: angular.noop
+          };
+        },
+        getResolveTokens: function() {
+          return ['a'];
+        }
+      });
       $timeout.flush();
 
       expect(tfMetaTags.update).toHaveBeenCalledWith();
